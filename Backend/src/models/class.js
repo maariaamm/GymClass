@@ -4,6 +4,7 @@ const classSchema = new mongoose.Schema({
   title: String,
   description: String,
   category: String,
+  trainer: String,
   trainerId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
   date: String,
   time: String,

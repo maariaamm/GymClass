@@ -3,9 +3,29 @@ import { getClasses, createClass } from "../controllers/classController.js";
 import { protect } from "../middleware/authMiddleware.js";
 import { adminOnly } from "../middleware/roleMiddleware.js";
 
+import express from "express";
+import { protect } from "../middleware/authMiddleware.js";
+import { 
+  getClasses,
+  getClassById,
+  createClass,
+  updateClass,
+  deleteClass
+} from "../controllers/classController.js";
+
 const router = express.Router();
 
+router.use(protect);
+
 router.get("/", getClasses);
-router.post("/", protect, adminOnly, createClass);
+
+router.get("/:id", getClassById);
+
+router.post("/", createClass);
+
+router.put("/:id", updateClass);
+
+router.delete("/:id", deleteClass);
 
 export default router;
+
