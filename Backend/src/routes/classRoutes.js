@@ -1,10 +1,6 @@
 import express from "express";
-import { getClasses, createClass } from "../controllers/classController.js";
 import { protect } from "../middleware/authMiddleware.js";
 import { adminOnly } from "../middleware/roleMiddleware.js";
-
-import express from "express";
-import { protect } from "../middleware/authMiddleware.js";
 import { 
   getClasses,
   getClassById,
