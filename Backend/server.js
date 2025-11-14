@@ -5,6 +5,8 @@ import cors from "cors";
 import connectDB from "./src/config/db.js";
 
 import authRoutes from "./src/routes/authRoutes.js";
+import userRoutes from "./src/routes/userRoutes.js";
+
 import classRoutes from "./src/routes/classRoutes.js";
 import bookingRoutes from "./src/routes/bookingRoutes.js";
 
@@ -18,8 +20,8 @@ app.use(express.json());
 app.use("/auth", authRoutes);
 app.use("/classes", classRoutes);
 app.use("/bookings", bookingRoutes);
+app.use("/auth", userRoutes);
 
-// DB + server start
 connectDB();
 
 app.listen(process.env.PORT, () => {
