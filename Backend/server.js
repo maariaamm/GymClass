@@ -24,6 +24,12 @@ app.use("/auth", userRoutes);
 
 connectDB();
 
+  app.get("/", (_req, res) => {
+  res.send("GymClass Backend API is running!");
+});
+
 app.listen(process.env.PORT || 8000, () => {
   console.log(`Server running on port ${process.env.PORT}`);
+
+
 });
