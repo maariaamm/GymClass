@@ -10,7 +10,7 @@ export const getClasses = async (req, res) => {
     }
 
     const classes = await Class.find(query).populate("trainerId", "name");
-  res.json(classes);
+    res.json(classes);
   } catch (error) {
     console.error("Get classes error:", error);
     res.status(500).json({ message: "Server error" });
@@ -34,7 +34,7 @@ export const createClass = async (req, res) => {
       return res.status(403).json({ message: "Admins and trainers only" });
     }
 
-  const gymClass = await Class.create(req.body);
+    const gymClass = await Class.create(req.body);
     res.status(201).json(gymClass);
   } catch (error) {
     console.error("Create class error:", error);
@@ -61,7 +61,7 @@ export const updateClass = async (req, res) => {
     if (trainerId) gymClass.trainerId = trainerId;
 
     await gymClass.save();
-  res.json(gymClass);
+    res.json(gymClass);
   } catch (error) {
     console.error("Update class error:", error);
     res.status(500).json({ message: "Server error" });
