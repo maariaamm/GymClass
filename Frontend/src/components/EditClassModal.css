@@ -1,0 +1,68 @@
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.edit-class-modal {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 10px;
+  width: 400px;
+  max-width: 90%;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.edit-class-modal h2 {
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.edit-class-modal form label {
+  display: block;
+  margin-top: 0.8rem;
+  font-weight: bold;
+}
+
+.edit-class-modal form input,
+.edit-class-modal form textarea {
+  width: 100%;
+  padding: 0.5rem;
+  margin-top: 0.3rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.edit-class-modal textarea {
+  resize: vertical;
+  height: 80px;
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1.5rem;
+}
+
+.modal-buttons button {
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.modal-buttons .cancel-btn {
+  background: #ccc;
+}
+
+.modal-buttons button:not(.cancel-btn) {
+  background: #007bff;
+  color: #fff;
+}
