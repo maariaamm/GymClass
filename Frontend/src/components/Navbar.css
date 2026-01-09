@@ -1,0 +1,104 @@
+/* Full width navbar */
+.navbar {
+  width: 100%;
+  background: #091b2b; /* keep original color */
+  box-shadow: 7px 8px 20px rgba(0, 0, 0, 0.25);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+/* Center content but keep full width */
+.navbar-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Logo */
+.nav-logo a {
+  font-size: 1.8rem;
+  font-weight: 500;
+  color: white;
+  letter-spacing: 1px;
+}
+
+/* Center menu */
+.nav-menu {
+  display: flex;
+  align-items: center;
+  gap: 2.5rem;
+  justify-content: center; /* center the menu links */
+  flex: 1;
+}
+
+/* Links */
+.nav-menu a {
+  color: white;
+  font-size: 1.2rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+
+.nav-menu a:hover {
+  opacity: 0.8;
+}
+
+/* Logout button */
+.logout-btn {
+  background: transparent;
+  border: 1px solid white;
+  color: white;
+  padding: 0.4rem 0.9rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: all 0.2s ease;
+}
+
+.logout-btn:hover {
+  background: white;
+  color: #0a1927;
+}
+
+/* SEARCH */
+.nav-search-wrapper {
+  position: relative;
+  margin-left: 2rem; /* small spacing from menu */
+}
+
+.nav-search-wrapper input {
+  padding: 6px 10px;
+  width: 200px;
+  border-radius: 4px;
+  border: none;
+  outline: none;
+}
+
+/* Dropdown */
+.search-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  color: #0a1927;
+  background: white;
+  border: 1px solid #ddd;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  z-index: 1000;
+}
+
+.search-dropdown li {
+  padding: 8px 10px;
+  cursor: pointer;
+}
+
+.search-dropdown li:hover {
+  background-color: #f2f2f2;
+}
