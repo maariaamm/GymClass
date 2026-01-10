@@ -1,0 +1,142 @@
+.admin-dashboard {
+  min-height: calc(100vh - 80px); /* minus navbar */
+  background: #f4f7fb;
+  padding: 3rem 2.5rem;
+}
+
+.admin-dashboard h1 {
+  font-size: 2.4rem;
+  font-weight: 600;
+  color: #091b2b;
+  margin-bottom: 2.5rem;
+}
+
+.admin-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+
+.stat-card {
+  background: white;
+  border-radius: 14px;
+  padding: 2rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.1);
+}
+
+.stat-card span {
+  font-size: 0.95rem;
+  color: #6b7280;
+}
+
+.stat-card h2 {
+  font-size: 2.2rem;
+  color: #091b2b;
+  font-weight: 600;
+}
+
+.admin-sections {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+  gap: 2.5rem;
+}
+
+.admin-section-card {
+  background: white;
+  border-radius: 16px;
+  padding: 2.2rem;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.07);
+}
+
+.admin-section-card h3 {
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: #091b2b;
+  margin-bottom: 1.4rem;
+}
+
+.admin-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.admin-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.9rem 0;
+  border-bottom: 1px solid #e5e7eb;
+  font-size: 0.95rem;
+}
+
+.admin-list li:last-child {
+  border-bottom: none;
+}
+
+.admin-list span {
+  color: #374151;
+}
+
+.admin-actions {
+  display: flex;
+  gap: 0.6rem;
+}
+
+.admin-actions button {
+  border: none;
+  padding: 0.4rem 0.9rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: background 0.2s ease, transform 0.15s ease;
+}
+
+.admin-actions button:hover {
+  transform: scale(1.05);
+}
+
+.admin-actions .edit {
+  background: #2563eb;
+  color: white;
+}
+
+.admin-actions .edit:hover {
+  background: #1d4ed8;
+}
+
+.admin-actions .delete {
+  background: #dc2626;
+  color: white;
+}
+
+.admin-actions .delete:hover {
+  background: #b91c1c;
+}
+
+.admin-empty {
+  text-align: center;
+  color: #6b7280;
+  padding: 2rem 0;
+  font-style: italic;
+}
+
+@media (max-width: 768px) {
+  .admin-dashboard {
+    padding: 2rem 1.5rem;
+  }
+
+  .admin-dashboard h1 {
+    font-size: 2rem;
+  }
+}
