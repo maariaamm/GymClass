@@ -1,78 +1,102 @@
-import User from "../models/user.js";
-import bcrypt from "bcryptjs";
-import { generateToken } from "../utils/generateToken.js";
+import User from '../models/user.js';
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
 
-// REGISTER
+/* 
+   AUTH
+ */
 export const register = async (req, res) => {
   try {
-    const { name, email, password } = req.body;
+    const name = req.body.name;
+    const email = req.body.email;
+    const password = req.body.password;
+    const role = req.body.role || 'user';
+    const profileImage = req.file ? `/uploads/profileImages/${req.file.filename}` : null;
 
     if (!name || !email || !password) {
-      return res.status(400).json({ message: "All fields are required" });
+      return res.status(400).json({ message: 'All fields are required' });
     }
 
-    const userExists = await User.findOne({ email });
-    if (userExists) return res.status(400).json({ message: "User already exists" });
+    const exists = await User.findOne({ email });
+    if (exists) {
+      return res.status(400).json({ message: 'User already exists' });
+    }
 
     const passwordHash = await bcrypt.hash(password, 10);
 
-    const user = await User.create({ name, email, passwordHash });
+    const user = await User.create({
+      name,
+      email,
+      passwordHash,
+      role,
+      profileImage,
+    });
+
+    const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET, {
+      expiresIn: '7d',
+    });
 
     res.status(201).json({
-      id: user._id,
-      token: generateToken(user._id),
-      role: user.role
+      token,
+      user: {
+        id: user._id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+        profileImage: user.profileImage,
+      },
     });
-  } catch (error) {
-    console.error("Register error:", error);
-    res.status(500).json({ message: "Server error" });
+  } catch (err) {
+    console.error('Register error:', err);
+    res.status(500).json({ message: 'Server error' });
   }
 };
-
-// LOGIN
 export const login = async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    if (!email || !password) return res.status(400).json({ message: "All fields are required" });
-
     const user = await User.findOne({ email });
-    if (!user) return res.status(400).json({ message: "Invalid credentials" });
+    if (!user) {
+      return res.status(400).json({ message: 'Invalid credentials' });
+    }
 
     const match = await bcrypt.compare(password, user.passwordHash);
-    if (!match) return res.status(400).json({ message: "Invalid credentials" });
+    if (!match) {
+      return res.status(400).json({ message: 'Invalid credentials' });
+    }
+
+    const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET, {
+      expiresIn: '7d',
+    });
 
     res.json({
-      id: user._id,
-      token: generateToken(user._id),
-      role: user.role
+      token,
+      user: {
+        id: user._id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+        profileImage: user.profileImage,
+      },
     });
-  } catch (error) {
-    console.error("Login error:", error);
-    res.status(500).json({ message: "Server error" });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
   }
 };
 
-// GET /auth/me
+/* 
+   USER
+ */
 export const getMe = async (req, res) => {
-  res.json({
-    id: req.user._id,
-    name: req.user.name,
-    email: req.user.email,
-    role: req.user.role
-  });
+  res.json(req.user);
 };
 
-// GET /users (admin only)
 export const getAllUsers = async (req, res) => {
-  if (req.user.role !== "admin") return res.status(403).json({ message: "Admins only" });
-
   try {
-    const users = await User.find().select("-passwordHash");
+    const users = await User.find().select('-passwordHash');
     res.json(users);
-  } catch (error) {
-    console.error("Get all users error:", error);
-    res.status(500).json({ message: "Server error" });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
   }
 };
 
@@ -80,48 +104,38 @@ export const updateUser = async (req, res) => {
   try {
     const { id } = req.params;
 
-
-    if (req.user.role !== "admin" && req.user._id.toString() !== id) {
-      return res.status(403).json({ message: "Forbidden" });
+    if (req.user.role !== 'admin' && req.user.id !== id) {
+      return res.status(403).json({ message: 'Not authorized' });
     }
 
-    const { name, email, role } = req.body;
-    const user = await User.findById(id);
-    if (!user) return res.status(404).json({ message: "User not found" });
+    const updates = {};
+    if (req.body.name) updates.name = req.body.name;
+    if (req.body.email) updates.email = req.body.email;
+    if (req.body.role && req.user.role === 'admin') updates.role = req.body.role; // Only admin can change role
+    if (req.body.password) updates.passwordHash = await bcrypt.hash(req.body.password, 10);
+    if (req.file) updates.profileImage = `/uploads/profileImages/${req.file.filename}`;
 
-    if (name) user.name = name;
-    if (email) user.email = email;
-    if (role && req.user.role === "admin") user.role = role; 
+    const updatedUser = await User.findByIdAndUpdate(id, updates, { new: true }).select(
+      '-passwordHash'
+    );
 
-    await user.save();
-
-    res.json({
-      id: user._id,
-      name: user.name,
-      email: user.email,
-      role: user.role
-    });
-  } catch (error) {
-    console.error("Update user error:", error);
-    res.status(500).json({ message: "Server error" });
+    res.json(updatedUser);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
   }
 };
-
 
 export const deleteUser = async (req, res) => {
   try {
     const { id } = req.params;
 
+    if (req.user.id === id) {
+      return res.status(400).json({ message: 'Admin cannot delete self' });
+    }
 
-    if (req.user.role !== "admin") return res.status(403).json({ message: "Admins only" });
-
-    const user = await User.findById(id);
-    if (!user) return res.status(404).json({ message: "User not found" });
-
-    await user.remove();
-    res.json({ message: "User deleted" });
-  } catch (error) {
-    console.error("Delete user error:", error);
-    res.status(500).json({ message: "Server error" });
+    await User.findByIdAndDelete(id);
+    res.json({ message: 'User deleted successfully' });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
   }
 };
