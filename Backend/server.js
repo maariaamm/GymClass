@@ -17,7 +17,12 @@ const app = express();
 /*
    Middleware
 */
-app.use(cors());
+app.use(
+  cors({
+    origin: ['https://bright-kringle-8f2296.netlify.app/', 'http://localhost:3000'],
+    credentials: true,
+  })
+);
 app.use(express.json());
 
 // Static files (profile images)
