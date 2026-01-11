@@ -2,7 +2,7 @@ import React from "react";
 import Navbar from "../components/Navbar.jsx";
 import frontpage from "../assets/front-page.jpg";
 import yoga from "../assets/yoga.png";
-import cardio from "../assets/cardio.png";
+import cardio from "../assets/cardio.avif";
 import strength from "../assets/strength.png";
 import "./LandingPage.css";
 
