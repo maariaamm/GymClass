@@ -1,35 +1,48 @@
-import dotenv from "dotenv";
+import dotenv from 'dotenv';
 dotenv.config();
-import express from "express";
-import cors from "cors";
-import connectDB from "./src/config/db.js";
 
-import authRoutes from "./src/routes/authRoutes.js";
-import userRoutes from "./src/routes/userRoutes.js";
+import express from 'express';
+import cors from 'cors';
+import path from 'path';
 
-import classRoutes from "./src/routes/classRoutes.js";
-import bookingRoutes from "./src/routes/bookingRoutes.js";
+import connectDB from './src/config/db.js';
+
+// Routes
+import userRoutes from './src/routes/userRoutes.js';
+import classRoutes from './src/routes/classRoutes.js';
+import bookingRoutes from './src/routes/bookingRoutes.js';
 
 const app = express();
 
-// Middleware
+/*
+   Middleware
+*/
 app.use(cors());
 app.use(express.json());
 
-// Routes
-app.use("/auth", authRoutes);
-app.use("/classes", classRoutes);
-app.use("/bookings", bookingRoutes);
-app.use("/auth", userRoutes);
+// Static files (profile images)
+app.use('/uploads', express.static(path.join(process.cwd(), 'uploads')));
 
-connectDB();
+/* 
+   Routes
+ */
+app.use('/auth', userRoutes);
+app.use('/classes', classRoutes);
+app.use('/bookings', bookingRoutes);
 
-  app.get("/", (_req, res) => {
-  res.send("GymClass Backend API is running!");
+/* 
+   Root
+ */
+app.get('/', (_req, res) => {
+  res.send('GymClass Backend API is running!');
 });
 
-app.listen(process.env.PORT || 8000, () => {
-  console.log(`Server running on port ${process.env.PORT}`);
+/* 
+   Start server
+ */
+connectDB();
 
-
+const PORT = process.env.PORT || 8000;
+app.listen(PORT, () => {
+  console.log(`✅ Server running on port ${PORT}`);
 });
