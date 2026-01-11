@@ -8,6 +8,7 @@ const classSchema = new mongoose.Schema(
     trainer: String,
     date: { type: Date },
     time: String,
+    maxParticipants: Number,
     imageUrl: String,
   },
   { timestamps: true }

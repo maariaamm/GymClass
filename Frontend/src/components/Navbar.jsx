@@ -3,8 +3,9 @@ import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import api from "../services/api";
 import "./Navbar.css";
-
 const Navbar = () => {
+  const [menuOpen, setMenuOpen] = useState(false);
+
   const { user, logout } = useContext(AuthContext);
   const [search, setSearch] = useState("");
   const [suggestions, setSuggestions] = useState([]);
@@ -48,23 +49,21 @@ const Navbar = () => {
         <div className="nav-logo">
           <Link to="/">GymClass</Link>
         </div>
-
-        <div className="nav-menu">
+        <button className="menu-toggle" onClick={() => setMenuOpen(!menuOpen)}>
+          ☰
+        </button>
+        <div className={`nav-menu ${menuOpen ? "open" : ""}`}>
+          {" "}
           {user && !isAdmin && <Link to="/">Home</Link>}
-
           <Link to="/classesPage">Classes</Link>
-
           {user && !isAdmin && <Link to="/myBookings">My Booked Classes</Link>}
-
           {user && <Link to="/myProfilePage">My Profile</Link>}
-
           {/* ADMIN ONLY */}
           {isAdmin && (
             <>
               <Link to="/admin/dashboard">Admin Dashboard</Link>
             </>
           )}
-
           {user ? (
             <button className="logout-btn" onClick={handleLogout}>
               Logout

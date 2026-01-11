@@ -51,13 +51,17 @@ export const updateClass = async (req, res) => {
     const gymClass = await Class.findById(req.params.id);
     if (!gymClass) return res.status(404).json({ message: 'Class not found' });
 
-    const { title, description, trainer, date, maxParticipants } = req.body;
+    const { title, description, trainer, time, date, category, maxParticipants, imageUrl } =
+      req.body;
 
     if (title) gymClass.title = title;
     if (description) gymClass.description = description;
     if (trainer) gymClass.trainer = trainer;
+    if (time) gymClass.time = time;
     if (date) gymClass.date = date;
+    if (category) gymClass.category = category;
     if (maxParticipants) gymClass.maxParticipants = maxParticipants;
+    if (imageUrl) gymClass.date = date;
 
     await gymClass.save();
     res.json(gymClass);

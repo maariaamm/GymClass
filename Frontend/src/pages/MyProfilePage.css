@@ -3,27 +3,29 @@
   color: black;
 }
 
+/* ===== CONTAINER ===== */
 .profile-container {
   display: flex;
   max-width: 1200px;
-  margin: auto;
+  margin: 20px auto;
   gap: 40px;
-  margin-top: 15px;
-  margin-bottom: 15px;
-  box-shadow: #000000;
+  flex-wrap: wrap; /* gör container flexibel på mindre skärmar */
 }
 
+/* ===== PROFILE IMAGE SECTION ===== */
 .profile-image-section {
   flex: 1;
+  min-width: 250px;
   position: relative;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   background-size: cover;
   background-position: center;
   border-radius: 12px;
   color: white;
-  margin-bottom: 100px;
+  padding-top: 20px;
 }
 
 .profile-image {
@@ -33,37 +35,25 @@
   object-fit: cover;
   border: 5px solid #fff;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-  margin-bottom: 70px;
-  margin-right: 5px;
+  margin-bottom: 15px; /* mindre space nu */
 }
 
 .profile-quote {
-  position: absolute;
-  bottom: 30px;
-  left: 20px;
-  right: 20px;
   text-align: center;
-  font-size: 1.3rem;
-  text-shadow: 4px 1px 6px rgba(0, 0, 0, 0.6);
-  margin-bottom: 80px;
+  font-size: 1.2rem;
+  text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.6);
+  margin-bottom: 10px;
   color: white;
 }
 
+/* ===== PROFILE INFO SECTION ===== */
 .profile-info-section {
-  flex: 1;
+  flex: 2;
+  min-width: 300px;
   background-color: #fff;
   padding: 30px;
   border-radius: 12px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-}
-h2 {
-  font-size: 20px;
-  margin-top: 8px;
-  margin-bottom: 8px;
-}
-h1 {
-  margin-top: 5px;
-  color: #091b2b;
 }
 
 .profile-info-section h1 {
@@ -77,8 +67,15 @@ h1 {
   margin: 10px 0;
 }
 
+/* ===== BOOKINGS SUMMARY ===== */
 .bookings-summary {
   margin-top: 15px;
+}
+
+.bookings-summary h2 {
+  font-size: 20px;
+  margin-top: 8px;
+  margin-bottom: 8px;
 }
 
 .bookings-summary ul {
@@ -87,21 +84,21 @@ h1 {
   font-size: 15px;
 }
 
+/* ===== FORMS ===== */
 .password-form,
 .image-upload-form {
   display: flex;
   flex-direction: column;
   gap: 20px;
+  margin-top: 20px;
 }
 
-.password-form input {
-  padding: 8px 8px;
+.password-form input,
+.image-upload-form input {
+  padding: 8px;
   font-size: 16px;
   border-radius: 8px;
   border: 1px solid #ccc;
-}
-.image-upload-form input {
-  padding: 5px 5px;
 }
 
 .password-form button,
@@ -122,6 +119,19 @@ h1 {
   background-color: #0056b3;
 }
 
+/* ===== HEADINGS ===== */
+h1 {
+  margin-top: 5px;
+  color: #091b2b;
+}
+
+h2 {
+  font-size: 20px;
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+
+/* ===== RESPONSIVE ===== */
 @media (max-width: 900px) {
   .profile-container {
     flex-direction: column;
@@ -134,5 +144,14 @@ h1 {
   .profile-image {
     width: 200px;
     height: 200px;
+  }
+
+  .profile-quote {
+    font-size: 1rem;
+    margin-bottom: 15px;
+  }
+
+  .profile-info-section {
+    padding: 20px;
   }
 }
