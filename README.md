@@ -1,20 +1,21 @@
 # GymClass
 
-# 🏋️ GymClass – Gym Booking System
+# GymClass – Gym Booking System
 
 GymClass is a fullstack web application for managing gym classes, bookings, and users.  
 It includes authentication, role-based authorization, and CRUD functionality for users, classes, and bookings.
 
 ---
 
-## 🧱 Tech Stack
+- Visit my deployed site -> https://bright-kringle-8f2296.netlify.app/
+
+## Tech Stack
 
 **Backend**
 
 - Node.js, Express
 - MongoDB, Mongoose
 - JWT, bcrypt
-- dotenv
 
 **Frontend**
 
@@ -23,13 +24,3 @@ It includes authentication, role-based authorization, and CRUD functionality for
 - CSS
 
 ---
-
-## 🚀 Getting Started
-
-### Backend
-
-```bash
-cd Backend
-npm install
-node server.js
-```
