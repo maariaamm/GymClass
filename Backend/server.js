@@ -19,7 +19,7 @@ const app = express();
 */
 app.use(
   cors({
-    origin: ['https://bright-kringle-8f2296.netlify.app/', 'http://localhost:3000'],
+    origin: ['http://localhost:3000', 'https://bright-kringle-8f2296.netlify.app'],
     credentials: true,
   })
 );

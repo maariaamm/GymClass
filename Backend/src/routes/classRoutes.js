@@ -1,27 +1,23 @@
-import express from "express";
-import { protect } from "../middleware/authMiddleware.js";
-import { adminOnly } from "../middleware/roleMiddleware.js";
-import { 
+import express from 'express';
+import { protect } from '../middleware/authMiddleware.js';
+import { adminOnly } from '../middleware/roleMiddleware.js';
+import {
   getClasses,
   getClassById,
   createClass,
   updateClass,
-  deleteClass
-} from "../controllers/classController.js";
+  deleteClass,
+} from '../controllers/classController.js';
 
 const router = express.Router();
 
-router.use(protect);
+/* 🌍 PUBLIC ROUTES */
+router.get('/', getClasses);
+router.get('/:id', getClassById);
 
-router.get("/", getClasses);
-
-router.get("/:id", getClassById);
-
-router.post("/", createClass);
-
-router.put("/:id", updateClass);
-
-router.delete("/:id", deleteClass);
+/* 🔐 PROTECTED ROUTES */
+router.post('/', protect, adminOnly, createClass);
+router.put('/:id', protect, adminOnly, updateClass);
+router.delete('/:id', protect, adminOnly, deleteClass);
 
 export default router;
-
