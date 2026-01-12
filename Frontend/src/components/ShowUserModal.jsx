@@ -4,7 +4,6 @@ import "./ClassModal.css";
 const ShowUserModal = ({ user, bookings, onClose }) => {
   if (!user) return null;
 
-  // Säkerställ att bookings alltid är en array
   const bookedClasses = bookings?.map((b) => b.classId) || [];
 
   return (
@@ -14,8 +13,10 @@ const ShowUserModal = ({ user, bookings, onClose }) => {
 
         {user.profileImage && (
           <img
-            src={`http://localhost:8000${
-              user.profileImage || "/uploads/profileImages/default.png"
+            src={`${
+              user.profileImage
+                ? `https://gymclass.onrender.com${user.profileImage}`
+                : "https://gymclass.onrender.com/uploads/profileImages/default.avif"
             }`}
             style={{
               width: "80px",
