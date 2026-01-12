@@ -95,9 +95,16 @@ function MyProfilePage() {
       <div className="profile-container">
         <div className="profile-image-section">
           <img
-            src={`http://localhost:8000${currentUser.profileImage}`}
+            src={
+              currentUser.profileImage
+                ? `${process.env.REACT_APP_API_URL}${currentUser.profileImage}`
+                : "/default-avatar.avif"
+            }
             alt={currentUser.name || "Profile"}
             className="profile-image"
+            onError={(e) => {
+              e.target.src = "/default-avatar.avif";
+            }}
           />
           <p className="profile-quote">
             "Train hard, stay consistent, and enjoy the journey!"
