@@ -20,7 +20,6 @@ It includes authentication, role-based authorization, and CRUD functionality for
 **Frontend**
 
 - React
-- Context API
 - CSS
 
 ---
